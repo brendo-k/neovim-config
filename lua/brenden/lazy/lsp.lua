@@ -9,7 +9,6 @@ return {
         'L3MON4D3/LuaSnip',
         'saadparwaiz1/cmp_luasnip'
     },
-
     config = function()
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
@@ -60,8 +59,18 @@ return {
         require('lspconfig')['pyright'].setup {
             capabilities = capabilities
         }
-        vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { noremap = true, silent = true })
-        vim.keymap.set('n', 'gd', vim.lsp.buf.declaration, { noremap = true, silent = true })
-        vim.keymap.set('n', 'rn', vim.lsp.buf.rename, { noremap = true, silent = true })
-    end
+
+        
+        -- on cursor hover over text, show error commands
+        vim.api.nvim_create_autocmd("CursorHold", {
+            callback = function()
+                vim.diagnostic.open_float(nil, { focus = false })
+            end
+        })
+    end,
+    keys = {
+        {'<C-h>', vim.lsp.buf.signature_help, noremap = true, silent = true, mode='i'},
+        {'gd', vim.lsp.buf.declaration, noremap = true, silent = true , mode='n'},
+        {'rn', vim.lsp.buf.rename, noremap = true, silent = true, mode='n'},
+    }
 }

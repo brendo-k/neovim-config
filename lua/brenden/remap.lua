@@ -27,3 +27,5 @@ vim.keymap.set("n", "<leader>p", [["+p]])
 -- open neovim rc directory
 vim.keymap.set("n", "<leader>rc", "<Cmd>e ~/.config/nvim/<Cr>")
 
+-- Run current bash file on slurm
+vim.keymap.set("n", "<leader>s", ":!submit_sbatch.sh <C-R>=expand('%:t')<CR><CR>")
