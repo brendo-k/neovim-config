@@ -60,6 +60,12 @@ return {
         require('lspconfig')['pyright'].setup {
             capabilities = capabilities
         }
+
+        vim.api.nvim_create_autocmd("CursorHold", {
+            callback = function()
+                vim.diagnostic.open_float(nil, { focus = false })
+            end
+        })
         vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { noremap = true, silent = true })
         vim.keymap.set('n', 'gd', vim.lsp.buf.declaration, { noremap = true, silent = true })
         vim.keymap.set('n', 'rn', vim.lsp.buf.rename, { noremap = true, silent = true })
