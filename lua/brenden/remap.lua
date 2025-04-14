@@ -30,7 +30,14 @@ vim.keymap.set("n", "<leader>p", [["+p]])
 vim.keymap.set("n", "<leader>rc", "<Cmd>e ~/.config/nvim/<Cr>")
 
 -- Run current bash file on slurm
-vim.keymap.set("n", "<leader>s", ":w<Cr>:!sbatch %<Cr>")
+local handle = io.popen('hostname')
+local hostname = handle:read("*l")
+handle:close()
+if (hostname:lower():find("cedar") ~= nil) then
+	vim.keymap.set("n", "<leader>s", ":w<Cr>:!submit_sbatch.sh <C-R>=expand('%:t')<CR><CR>")
+else
+	vim.keymap.set("n", "<leader>s", ":w<Cr>:!sbatch %<Cr>")
+end
 
 vim.keymap.set("n", "<leader>=", function() vim.cmd("cd " .. vim.b.netrw_curdir) end)
 
@@ -45,3 +52,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end, { buffer = true })
   end,
 })
+
+-- Run current bash file on slurm
+vim.keymap.set("n", "<leader>n", vim.cmd.bp)
+vim.keymap.set("n", "<leader>m", vim.cmd.bn)
