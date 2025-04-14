@@ -4,6 +4,8 @@ vim.g.maplocalleader = "\\"
 
 -- open file system
 vim.keymap.set("n", "<leader>fs", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>fh", function() vim.cmd("Explore ~") end)
+
 
 --nicer way to move
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
@@ -28,4 +30,18 @@ vim.keymap.set("n", "<leader>p", [["+p]])
 vim.keymap.set("n", "<leader>rc", "<Cmd>e ~/.config/nvim/<Cr>")
 
 -- Run current bash file on slurm
-vim.keymap.set("n", "<leader>s", ":!submit_sbatch.sh <C-R>=expand('%:t')<CR><CR>")
+vim.keymap.set("n", "<leader>s", ":w<Cr>:!sbatch %<Cr>")
+
+vim.keymap.set("n", "<leader>=", function() vim.cmd("cd " .. vim.b.netrw_curdir) end)
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "netrw",
+  callback = function()
+    vim.keymap.set("n", "<leader>y", function()
+      local path = vim.fn.expand("<cfile>")
+      local fullpath = vim.fn.fnamemodify(path, ":p")
+      vim.fn.setreg([["]], fullpath)
+      print("Copied to clipboard: " .. fullpath)
+    end, { buffer = true })
+  end,
+})
