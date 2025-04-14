@@ -30,5 +30,5 @@ vim.wo.relativenumber = true
 vim.g.netrw_liststyle = 3
 vim.g.netrw_banner = 0
 
-vim.o.updatetime = 250  -- Reduce delay for update time (default is 4000 ms) (used for CursorHold)
+vim.o.updatetime = 500  -- Reduce delay for update time (default is 4000 ms) (used for CursorHold)
 
