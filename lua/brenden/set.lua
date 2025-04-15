@@ -32,3 +32,5 @@ vim.g.netrw_banner = 0
 
 vim.o.updatetime = 500  -- Reduce delay for update time (default is 4000 ms) (used for CursorHold)
 
+vim.opt.termguicolors = true
+

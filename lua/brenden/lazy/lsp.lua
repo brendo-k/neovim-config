@@ -78,6 +78,10 @@ return {
         require('lspconfig')['pyright'].setup {
             capabilities = capabilities
         }
+        require'lspconfig'['clangd'].setup{
+            capabilities = capabilities
+        }
+
 
         vim.api.nvim_create_autocmd("CursorHold", {
             callback = function()
