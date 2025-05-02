@@ -9,14 +9,15 @@ return {
         'L3MON4D3/LuaSnip',
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-        'saadparwaiz1/cmp_luasnip'
+        'saadparwaiz1/cmp_luasnip',
+        'honza/vim-snippets'
     },
 
     config = function()
         local cmp = require('cmp')
-        local cmp_lsp = require("cmp_nvim_lsp")
-        local cmp_select = { behavior = cmp.SelectBehavior.Select }
         local luasnip = require('luasnip')
+
+        require("luasnip.loaders.from_snipmate").lazy_load()
         require("mason").setup()
         require("mason-lspconfig").setup()
 
@@ -71,15 +72,13 @@ return {
         -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
         cmp.setup.cmdline(':', {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = { 
+            sources = {
                 { name = 'cmdline' }
             },
             matching = { disallow_symbol_nonprefix_matching = false }
         })
 
-        
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
         -- Mason auto load lsp servers
         require("mason-lspconfig").setup_handlers {
             -- The first entry (without a key) will be the default handler
@@ -100,5 +99,6 @@ return {
         vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { noremap = true, silent = true })
         vim.keymap.set('n', 'gd', vim.lsp.buf.declaration, { noremap = true, silent = true })
         vim.keymap.set('n', 'rn', vim.lsp.buf.rename, { noremap = true, silent = true })
+
     end
 }
