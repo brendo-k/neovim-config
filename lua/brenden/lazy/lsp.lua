@@ -7,6 +7,8 @@ return {
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
         'L3MON4D3/LuaSnip',
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
         'saadparwaiz1/cmp_luasnip'
     },
 
@@ -15,6 +17,8 @@ return {
         local cmp_lsp = require("cmp_nvim_lsp")
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
         local luasnip = require('luasnip')
+        require("mason").setup()
+        require("mason-lspconfig").setup()
 
         cmp.setup({
             snippet = {
@@ -45,14 +49,15 @@ return {
                         fallback()
                     end
                 end, { "i", "s" }),
-                ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-                ["<C-Space>"] = cmp.mapping.complete(),
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
                 { name = 'luasnip' }, -- For luasnip users
             }, {
                     { name = 'buffer' },
+                },
+                {
+                    { name = 'path' }
                 })
         })
         -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -74,14 +79,18 @@ return {
 
         
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-        require('lspconfig')['pyright'].setup {
-            capabilities = capabilities
-        }
-        require'lspconfig'['clangd'].setup{
-            capabilities = capabilities
-        }
 
+        -- Mason auto load lsp servers
+        require("mason-lspconfig").setup_handlers {
+            -- The first entry (without a key) will be the default handler
+            -- and will be called for each installed server that doesn't have
+            -- a dedicated handler.
+            function (server_name) -- default handler (optional)
+                require("lspconfig")[server_name].setup {
+                    capabilities = capabilities
+                }
+            end,
+        }
 
         vim.api.nvim_create_autocmd("CursorHold", {
             callback = function()
