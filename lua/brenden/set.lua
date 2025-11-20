@@ -14,7 +14,12 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 
 -- undo files
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+local os_name = vim.loop.os_uname().sysname
+if os_name == "Windows_NT" then
+    vim.opt.undodir = os.getenv("USERPROFILE") .. "\\.vim\\undodir"
+else
+    vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+end
 vim.opt.undofile = true
 
 -- incremental search when seraching 
