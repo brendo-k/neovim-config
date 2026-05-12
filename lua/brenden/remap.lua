@@ -1,6 +1,6 @@
--- set leader keys
+ -- set leader keys
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = " "
 
 -- open file system
 vim.keymap.set("n", "<leader>fs", vim.cmd.Ex)
@@ -56,3 +56,14 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Run current bash file on slurm
 vim.keymap.set("n", "<leader>n", vim.cmd.bp)
 vim.keymap.set("n", "<leader>m", vim.cmd.bn)
+
+-- Quick fix list
+vim.keymap.set("n", "]q", ":cnext<CR>")
+vim.keymap.set("n", "[q", ":cprev<CR>")
+
+-- Escape term
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
+vim.keymap.set("t", "<Esc><leader>h", [[<C-\><C-n><C-w>h]])
+vim.keymap.set("t", "<Esc><leader>j", [[<C-\><C-n><C-w>j]])
+vim.keymap.set("t", "<Esc><leader>k", [[<C-\><C-n><C-w>k]])
+vim.keymap.set("t", "<Esc><leader>l", [[<C-\><C-n><C-w>l]])

@@ -9,6 +9,9 @@ vim.opt.splitright = true
 -- dont warp lines
 vim.opt.wrap = false
 
+-- set colour column
+vim.opt.colorcolumn = "80"
+
 -- Don't save these annoying files
 vim.opt.swapfile = false
 vim.opt.backup = false
