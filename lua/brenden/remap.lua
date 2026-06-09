@@ -63,7 +63,7 @@ vim.keymap.set("n", "[q", ":cprev<CR>")
 
 -- Escape term
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
-vim.keymap.set("t", "<Esc><leader>h", [[<C-\><C-n><C-w>h]])
-vim.keymap.set("t", "<Esc><leader>j", [[<C-\><C-n><C-w>j]])
-vim.keymap.set("t", "<Esc><leader>k", [[<C-\><C-n><C-w>k]])
-vim.keymap.set("t", "<Esc><leader>l", [[<C-\><C-n><C-w>l]])
+vim.keymap.set("t", "<Tab><leader>h", [[<C-\><C-n><C-w>h]])
+vim.keymap.set("t", "<Tab><leader>j", [[<C-\><C-n><C-w>j]])
+vim.keymap.set("t", "<Tab><leader>k", [[<C-\><C-n><C-w>k]])
+vim.keymap.set("t", "<Tab><leader>l", [[<C-\><C-n><C-w>l]])

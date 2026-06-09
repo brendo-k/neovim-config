@@ -7,8 +7,8 @@ return {
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
         'L3MON4D3/LuaSnip',
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason.nvim",
+        "mason-org/mason-lspconfig.nvim",
         'saadparwaiz1/cmp_luasnip',
         'honza/vim-snippets'
     },
@@ -80,16 +80,6 @@ return {
 
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         -- Mason auto load lsp servers
-        require("mason-lspconfig").setup_handlers {
-            -- The first entry (without a key) will be the default handler
-            -- and will be called for each installed server that doesn't have
-            -- a dedicated handler.
-            function (server_name) -- default handler (optional)
-                require("lspconfig")[server_name].setup {
-                    capabilities = capabilities
-                }
-            end,
-        }
 
         vim.api.nvim_create_autocmd("CursorHold", {
             callback = function()

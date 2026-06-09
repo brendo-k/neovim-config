@@ -10,7 +10,7 @@ vim.opt.splitright = true
 vim.opt.wrap = false
 
 -- set colour column
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "120"
 
 -- Don't save these annoying files
 vim.opt.swapfile = false
@@ -42,3 +42,32 @@ vim.o.updatetime = 500  -- Reduce delay for update time (default is 4000 ms) (us
 
 vim.opt.termguicolors = true
 
+
+-- lua/brenden/set.lua
+
+vim.opt.autoread = true
+
+local autoread_group = vim.api.nvim_create_augroup("AutoReadExternalChanges", { clear = true })
+
+vim.api.nvim_create_autocmd({
+  "BufEnter",
+  "FocusGained",
+  "TermClose",
+  "TermLeave",
+}, {
+  group = autoread_group,
+  pattern = "*",
+  callback = function()
+    if vim.fn.mode() ~= "c" then
+      vim.cmd("checktime")
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  group = autoread_group,
+  pattern = "*",
+  callback = function()
+    vim.notify("File reloaded from disk")
+  end,
+})
